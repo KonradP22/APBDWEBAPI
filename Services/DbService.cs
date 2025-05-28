@@ -18,12 +18,12 @@ public class DbService(AppDbContext data) : IDbService
     {
         if (prescription.DueDate < prescription.Date)
         {
-            throw new Exception("error");
+            throw new Exception("Due date cannot be earlier than date");
         }
 
         if (prescription.Medicaments.Count > 10)
         {
-            throw new Exception("error");
+            throw new Exception("Medicaments count is too large");
         }
 
         List<Medicament> medicaments = [];
@@ -33,7 +33,7 @@ public class DbService(AppDbContext data) : IDbService
             var medicament = await data.Medicaments.FirstOrDefaultAsync(m => m.IdMedicament == med.MedicamentId);
             if (medicament is null)
             {
-                throw new Exception("error");
+                throw new Exception("Medicament not found");
             }
             medicaments.Add(medicament);
         }
